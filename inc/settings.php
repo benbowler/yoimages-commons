@@ -106,9 +106,6 @@ if ( ! class_exists( 'YoImagesSettingsPage' ) ) {
 		public function init_admin_page() {
 			$settings = apply_filters( 'yoimg_settings', array() );
 
-      // TODO: Why isn't the checkbox saving properly??
-			// var_dump($settings);
-			// die();
 			foreach ( $settings as $setting ) {
 				$option_page = $setting['option']['page'];
 				register_setting( $setting['option']['option_group'], $setting['option']['option_name'], $setting['option']['sanitize_callback'] );
