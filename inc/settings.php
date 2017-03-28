@@ -6,16 +6,16 @@ if (! defined ( 'ABSPATH' )) {
 if ( ! class_exists( 'YoImagesSettingsPage' ) ) {
 
 	class YoImagesSettingsPage {
-		
+
 		public function __construct() {
 			add_action ( 'admin_menu', array ( $this, 'add_plugin_page_menu_item' ) );
 			add_action ( 'admin_init', array ( $this, 'init_admin_page' ) );
 		}
-		
+
 		public function add_plugin_page_menu_item() {
 			add_options_page( __( 'YoImages settings', YOIMG_DOMAIN ), 'YoImages', 'manage_options', 'yoimg-settings', array( $this, 'create_admin_page' ) );
 		}
-		
+
 		public function create_admin_page() {
 			if ( !current_user_can( 'manage_options' ) ) {
 				wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -58,7 +58,7 @@ if ( ! class_exists( 'YoImagesSettingsPage' ) ) {
 					<?php
 						settings_fields( $active_tab . '-group' );
 						do_settings_sections( $active_tab );
-						submit_button(); 
+						submit_button();
 					?>
 					</form>
 				<?php
@@ -85,7 +85,7 @@ if ( ! class_exists( 'YoImagesSettingsPage' ) ) {
 			</div>
 			<?php
 		}
-	
+
 		private function sanitize_item(&$item, $key) {
 			if ( is_string( $item ) ) {
 				$item = sanitize_text_field( $item );
@@ -105,6 +105,10 @@ if ( ! class_exists( 'YoImagesSettingsPage' ) ) {
 
 		public function init_admin_page() {
 			$settings = apply_filters( 'yoimg_settings', array() );
+
+      // TODO: Why isn't the checkbox saving properly??
+			// var_dump($settings);
+			// die();
 			foreach ( $settings as $setting ) {
 				$option_page = $setting['option']['page'];
 				register_setting( $setting['option']['option_group'], $setting['option']['option_name'], $setting['option']['sanitize_callback'] );
@@ -119,7 +123,7 @@ if ( ! class_exists( 'YoImagesSettingsPage' ) ) {
 			}
 		}
 	}
-	
+
 	new YoImagesSettingsPage();
 
 }
